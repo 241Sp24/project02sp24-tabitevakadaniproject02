@@ -9,10 +9,8 @@ package studentdriver;
  * @author S554271
  */
 public class OnlineStudent extends StudentFees{
-    private int noOfMonths;
-    private static final double MONTHLY_FEE = 1245.25;
 
-    public OnlineStudent(String studentName, int studentID, boolean isEnrolled, int noOfMonths) {
+    public OnlineStudent(String studentName, int studentID, boolean isEnrolled) {
         super(studentName, studentID, isEnrolled);
     }
 
@@ -20,9 +18,5 @@ public class OnlineStudent extends StudentFees{
     public double getPayableAmount() {
         throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
     }
-
-    @Override
-    public String toString() {
-        return "OnlineStudent{" + "noOfMonths=" + noOfMonths + '}';
-    }
+    
 }
