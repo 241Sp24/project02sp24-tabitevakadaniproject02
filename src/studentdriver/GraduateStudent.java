@@ -9,6 +9,7 @@ package studentdriver;
  * @author S554271
  */
 public class GraduateStudent extends StudentFees {
+
     private boolean isGraduateAssistant;
     private String graduateAssistantType;
     private int coursesEnrolled;
@@ -27,7 +28,7 @@ public class GraduateStudent extends StudentFees {
         this.coursesEnrolled = coursesEnrolled;
     }
 
-    public boolean isIsGraduateAssistant() {
+    public boolean isGraduateAssistant() {
         return isGraduateAssistant;
     }
 
@@ -46,11 +47,11 @@ public class GraduateStudent extends StudentFees {
                 return tuitionFee * HALF_ASSISTANTSHIP_WAIVER; // Half waiver
             }
         }
-        return tuitionFee;}
+        return tuitionFee;
+    }
 
     @Override
     public String toString() {
         return "GraduateStudent{" + "isGraduateAssistant=" + isGraduateAssistant + ", graduateAssistantType=" + graduateAssistantType + ", coursesEnrolled=" + coursesEnrolled + '}';
     }
 }
-

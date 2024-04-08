@@ -8,11 +8,12 @@ package studentdriver;
  *
  * @author S554271
  */
-public abstract class StudentFees {    
+public abstract class StudentFees {
+
     private String studentName;
     private int studentID;
     private boolean isEnrolled;
-    
+
     static final int CREDITS_PER_COURSE = 3;
     static final double PER_CREDIT_FEE = 543.50;
 
@@ -26,23 +27,23 @@ public abstract class StudentFees {
     public String getStudentName() {
         return studentName;
     }
-    
+
     public int getStudentID() {
         return studentID;
     }
 
-    public boolean isIsEnrolled() {
+    public boolean isEnrolled() {
         return isEnrolled;
     }
-    
+
     public int getCREDITS_PER_COURSE() {
         return CREDITS_PER_COURSE;
     }
-    
+
     public double getPER_CREDIT_FEE() {
         return PER_CREDIT_FEE;
     }
-    
+
     public void setStudentName(String studentName) {
         this.studentName = studentName;
     }
@@ -54,7 +55,7 @@ public abstract class StudentFees {
     public void setIsEnrolled(boolean isEnrolled) {
         this.isEnrolled = isEnrolled;
     }
-    
+
     public abstract double getPayableAmount();
 
     @Override
@@ -62,10 +63,3 @@ public abstract class StudentFees {
         return "StudentFees{" + "studentName=" + studentName + ", studentID=" + studentID + ", isEnrolled=" + isEnrolled + ", CREDITS_PER_COURSE=" + CREDITS_PER_COURSE + ", PER_CREDIT_FEE=" + PER_CREDIT_FEE + '}';
     }
 }
-     
-
-
-
-
-
-

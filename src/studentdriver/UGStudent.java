@@ -9,6 +9,7 @@ package studentdriver;
  * @author S554271
  */
 public class UGStudent extends StudentFees {
+
     private boolean hasScholarship;
     private double scholarshipAmount;
     private int coursesEnrolled;
@@ -40,7 +41,8 @@ public class UGStudent extends StudentFees {
         if (hasScholarship) {
             totalFee -= scholarshipAmount;
         }
-        return totalFee;}
+        return totalFee;
+    }
 
     @Override
     public String toString() {
