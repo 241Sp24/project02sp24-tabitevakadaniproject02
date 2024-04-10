@@ -10,10 +10,14 @@ package studentdriver;
  */
 public class GraduateStudent extends StudentFees {
 
-    private boolean isGraduateAssistant;
+	private boolean isGraduateAssistant;
     private String graduateAssistantType;
     private int coursesEnrolled;
-    private static final double ADDITIONAL_FEES = 654.45;
+    private static final double ADDITIONAL_FEE = 654.75;
+    private static final double FULL_ASSISTANTSHIP = 1.0;
+    private static final double HALF_ASSISTANTSHIP = 0.5;
+    private static final double PER_CREDIT_FEE = 305.50;
+    private static final int CREDITS_PER_COURSE = 4;
 
     public GraduateStudent(String studentName, int studentID, boolean isEnrolled, boolean isGraduateAssistant, String graduateAssistantType, int coursesEnrolled) {
         super(studentName, studentID, isEnrolled);
@@ -38,20 +42,26 @@ public class GraduateStudent extends StudentFees {
 
     @Override
     public double getPayableAmount() {
-        double tuitionFee = coursesEnrolled * PER_CREDIT_FEE;
+        double tuitionFee = coursesEnrolled * CREDITS_PER_COURSE * PER_CREDIT_FEE;
+        double totalFee = tuitionFee + ADDITIONAL_FEE;
         if (isGraduateAssistant) {
-            if (graduateAssistantType.equals("full")) {
-                return 0; // Full waiver
-            } else if (graduateAssistantType.equals("half")) {
-                double HALF_ASSISTANTSHIP_WAIVER = 0;
-                return tuitionFee * HALF_ASSISTANTSHIP_WAIVER; // Half waiver
+            if (graduateAssistantType.equalsIgnoreCase("full")) {
+                totalFee -= tuitionFee;
+            } else if (graduateAssistantType.equalsIgnoreCase("half")) {
+                totalFee -= tuitionFee * HALF_ASSISTANTSHIP;
             }
         }
-        return tuitionFee;
+        return totalFee;
     }
 
+
+    
     @Override
+    
     public String toString() {
-        return "GraduateStudent{" + "isGraduateAssistant=" + isGraduateAssistant + ", graduateAssistantType=" + graduateAssistantType + ", coursesEnrolled=" + coursesEnrolled + '}';
+      return String.format("Student Name: %s\nStudent ID: %d\nEnrolled: %b\nGraduate Assistant: %b\n" +
+          "Graduate Assistant Type: %s\nCouses Enrolled: %d\nPayable Amount: %.2f",
+          super.getStudentName(), super.getStudentID(), super.isEnrolled(), isGraduateAssistant(),
+          graduateAssistantType, getCoursesEnrolled(), getPayableAmount());
     }
 }

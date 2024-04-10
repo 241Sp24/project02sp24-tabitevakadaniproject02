@@ -10,10 +10,12 @@ package studentdriver;
  */
 public class UGStudent extends StudentFees {
 
-    private boolean hasScholarship;
-    private double scholarshipAmount;
-    private int coursesEnrolled;
-    public static final double ADDITIONAL_FEE = 820.70;
+	 private double scholarshipAmount;
+	    private boolean hasScholarship;
+	    private int coursesEnrolled;
+	    private static final double ADDITIONAL_FEE = 820.70;
+	    private static final double PER_CREDIT_FEE = 275.50;
+	    private static final int CREDITS_PER_COURSE = 3;
 
     public UGStudent(String studentName, int studentID, boolean isEnrolled, boolean hasScholarship, double scholarshipAmount, int coursesEnrolled) {
         super(studentName, studentID, isEnrolled);
@@ -35,17 +37,21 @@ public class UGStudent extends StudentFees {
     }
 
     @Override
-    public double getPayableAmount() {
-        double tuitionFee = coursesEnrolled * CREDITS_PER_COURSE * PER_CREDIT_FEE;
-        double totalFee = tuitionFee + 1000; // Additional fee
-        if (hasScholarship) {
-            totalFee -= scholarshipAmount;
+    public double getPayableAmount(){
+        double tuition = ((coursesEnrolled * super.getCREDITS_PER_COURSE()) 
+                * super.getPER_CREDIT_FEE() + ADDITIONAL_FEE) - scholarshipAmount;
+        if(!super.isEnrolled()){
+            tuition = 0;
         }
-        return totalFee;
+        return tuition;
     }
-
     @Override
-    public String toString() {
-        return "UGStudent{" + "hasScholarship=" + hasScholarship + ", scholarshipAmount=" + scholarshipAmount + ", coursesEnrolled=" + coursesEnrolled + '}';
-    }
-}
+    public String toString(){
+        return "Student Name: " + super.getStudentName() 
+                + "\nStudent id: " + super.getStudentID() 
+                + "\nEnrolled: " + super.isEnrolled() 
+                + "\nScholarship: "  + isHasScholarship() 
+                + "\nScholarship amount: " + getScholarshipAmount() 
+                + "\nCouses enrolled: " + getCoursesEnrolled() 
+                + "\nPayable amount: " + getPayableAmount();
+    }}

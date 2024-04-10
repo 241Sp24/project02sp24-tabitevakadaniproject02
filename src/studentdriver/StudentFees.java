@@ -58,8 +58,5 @@ public abstract class StudentFees {
 
     public abstract double getPayableAmount();
 
-    @Override
-    public String toString() {
-        return "StudentFees{" + "studentName=" + studentName + ", studentID=" + studentID + ", isEnrolled=" + isEnrolled + ", CREDITS_PER_COURSE=" + CREDITS_PER_COURSE + ", PER_CREDIT_FEE=" + PER_CREDIT_FEE + '}';
-    }
+    
 }

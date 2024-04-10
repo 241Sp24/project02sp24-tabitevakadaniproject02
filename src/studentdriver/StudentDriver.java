@@ -5,132 +5,126 @@
  */
 package studentdriver;
 
+import java.io.File;
+import java.io.FileNotFoundException;
 import java.util.*;
 
 public class StudentDriver {
 
-    public static void main(String[] args) {
-        Scanner scanner = new Scanner(System.in);
+    public static void main(String[] args) throws FileNotFoundException {
+    	
+Scanner input = new Scanner(System.in);
+        
 
-        System.out.print("Enter the number of UG students: ");
-        int numUGStudents = scanner.nextInt();
+        System.out.println();
+        
+        System.out.print("Enter the No of UG Students: ");
+        int numUGStudents = input.nextInt();
+        
+        System.out.print("Enter the No of Graduate Students: ");
+        int numGradStudents = input.nextInt();
+        
+        System.out.print("Enter the No of Online Students: ");
+        int numOnlineStudents = input.nextInt();
+        
+       
+        
+        
+        StudentFees[] students = new StudentFees[12];
+        File file = new File("input.csv");
+        Scanner fs = new Scanner(file);
 
-        System.out.print("Enter the number of Graduate students: ");
-        int numGradStudents = scanner.nextInt();
-
-        System.out.print("Enter the number of online students: ");
-        int numOnlineStudents = scanner.nextInt();
-
-        System.out.println("\n**********Undergraduate students list**********");
-        UGStudent[] ugStudents = new UGStudent[numUGStudents];
-        for (int i = 0; i < numUGStudents; i++) {
-            scanner.nextLine();
-            System.out.println("Enter details for UG Student " + (i + 1));
-            System.out.print("Student name: ");
-            String studentName = scanner.nextLine();
-            System.out.print("Student id: ");
-            int studentID = scanner.nextInt();
-            System.out.print("Enrolled: ");
-            boolean isEnrolled = scanner.nextBoolean();
-            System.out.print("Scholarship: ");
-            boolean hasScholarship = scanner.nextBoolean();
-            double scholarshipAmount = 0.0;
-            if (hasScholarship) {
-                System.out.print("Scholarship amount: ");
-                scholarshipAmount = scanner.nextDouble();
+        String[] data = new String[6];
+        int i = 0;
+        int count = 0;
+        while(fs.hasNext()) {
+            data = fs.next().split(",");
+            
+            if(count < numUGStudents){
+                students[i] = new UGStudent(data[1], Integer.parseInt(data[0]), 
+                            Boolean.parseBoolean(data[2]), Boolean.parseBoolean(data[4]),
+                            Double.parseDouble(data[5]), Integer.parseInt(data[3]));
             }
-            System.out.print("Courses enrolled: ");
-            int coursesEnrolled = scanner.nextInt();
-
-            ugStudents[i] = new UGStudent(studentName, studentID, isEnrolled, hasScholarship, scholarshipAmount, coursesEnrolled);
-        }
-
-        System.out.println("\n**********Graduate students list**********");
-        GraduateStudent[] gradStudents = new GraduateStudent[numGradStudents];
-        for (int i = 0; i < numGradStudents; i++) {
-            scanner.nextLine();
-            System.out.println("Enter details for Graduate Student " + (i + 1));
-            System.out.print("Student name: ");
-            String studentName = scanner.nextLine();
-            System.out.print("Student id: ");
-            int studentID = scanner.nextInt();
-            System.out.print("Enrolled: ");
-            boolean isEnrolled = scanner.nextBoolean();
-            System.out.print("Graduate assistant: ");
-            boolean isGraduateAssistant = scanner.nextBoolean();
-            scanner.nextLine();
-            String graduateAssistantType = "";
-            if (isGraduateAssistant) {
-                System.out.print("Graduate assistant type: ");
-                graduateAssistantType = scanner.nextLine();
+            else if(count >= numUGStudents && count < numUGStudents + numGradStudents){
+                if(data[4].equals("false")){
+                    students[i] = new GraduateStudent(data[1], Integer.parseInt(data[0]), 
+                            Boolean.parseBoolean(data[2]), Boolean.parseBoolean(data[4]),
+                            Integer.parseInt(data[3]));
+                }
+                else{
+                    students[i] = new GraduateStudent(data[1], Integer.parseInt(data[0]), 
+                            Boolean.parseBoolean(data[2]), Boolean.parseBoolean(data[4]),
+                            data[5], Integer.parseInt(data[3]));
+                }
             }
-            System.out.print("Courses enrolled: ");
-            int coursesEnrolled = scanner.nextInt();
-
-            gradStudents[i] = new GraduateStudent(studentName, studentID, isEnrolled, isGraduateAssistant, graduateAssistantType, coursesEnrolled);
-        }
-
-        System.out.println("\n**********Online students list**********");
-        OnlineStudent[] onlineStudents = new OnlineStudent[numOnlineStudents];
-        for (int i = 0; i < numOnlineStudents; i++) {
-            scanner.nextLine();
-            System.out.println("Enter details for Online Student " + (i + 1));
-            System.out.print("Student name: ");
-            String studentName = scanner.nextLine();
-            System.out.print("Student id: ");
-            int studentID = scanner.nextInt();
-            System.out.print("Enrolled: ");
-            boolean isEnrolled = scanner.nextBoolean();
-            System.out.print("No of months: ");
-            int noOfMonths = scanner.nextInt();
-
-            onlineStudents[i] = new OnlineStudent(studentName, studentID, isEnrolled, noOfMonths);
-        }
-
-        System.out.println("\n**********Undergraduate Students details**********");
-        double ugTotalFee = 0.0;
-        int scholarshipCount = 0;
-        int totalCourses = 0;
-        for (UGStudent ugStudent : ugStudents) {
-            System.out.println(ugStudent);
-            ugTotalFee += ugStudent.getPayableAmount();
-            if (ugStudent.isHasScholarship()) {
-                scholarshipCount++;
+            else if( count >= numUGStudents + numGradStudents){
+                students[i] = new OnlineStudent(data[1],Integer.parseInt(data[0]),
+                        Boolean.parseBoolean(data[2]),Integer.parseInt(data[3]));
             }
-            totalCourses += ugStudent.getCoursesEnrolled();
+            count += 1;
+            i += 1;
         }
-        double ugAverageFee = ugTotalFee / numUGStudents;
-        System.out.println("\nAverage Students fee: " + ugAverageFee);
-        System.out.println("Scholarship count: " + scholarshipCount);
-        System.out.println("Total number of courses: " + totalCourses);
-
-        System.out.println("\n**********Graduate Students details**********");
-        double gradTotalFee = 0.0;
-        int graduateAssistantCount = 0;
-        totalCourses = 0;
-        for (GraduateStudent gradStudent : gradStudents) {
-            System.out.println(gradStudent);
-            gradTotalFee += gradStudent.getPayableAmount();
-            if (gradStudent.isGraduateAssistant()) {
-                graduateAssistantCount++;
+        
+        fs.close();
+        
+        int scholarship = 0;
+        int UGcourses = 0;
+        int gradAssist = 0;
+        int graduateCourses = 0;
+        double ugFee = 0.0;
+        double gradFee = 0.0;
+        double onlineFee = 0.0;
+        count = 0;
+        for (StudentFees s: students) {
+            //
+            if(count == 0){
+                System.out.println("*******Undergraduate students list*******");
             }
-            totalCourses += gradStudent.getCoursesEnrolled();
+            if(count == numGradStudents){
+                System.out.println("*******Graduate students list*******");
+            }
+            if(count == numUGStudents + numGradStudents){
+                System.out.println("*******Online students list*******");
+            }
+            if(s instanceof UGStudent){
+                System.out.println(s);
+                ugFee += ((UGStudent) s).getPayableAmount();
+                UGcourses += ((UGStudent) s).getCoursesEnrolled();
+                if(((UGStudent) s).isHasScholarship()){
+                    scholarship += 1;
+                }
+            }
+          else if(s instanceof GraduateStudent){
+                System.out.println(s);
+                gradFee += ((GraduateStudent) s).getPayableAmount();
+                graduateCourses += ((GraduateStudent) s).getCoursesEnrolled();
+                if(((GraduateStudent) s).isGraduateAssistant()){
+                    gradAssist += 1;
+                }
+            }
+            else if(s instanceof OnlineStudent){
+                System.out.println(s);
+                onlineFee += ((OnlineStudent) s).getPayableAmount();
+            }
+            System.out.println();
+            count += 1;
         }
-        double gradAverageFee = gradTotalFee / numGradStudents;
-        System.out.println("\nAverage Students fee: " + gradAverageFee);
-        System.out.println("Graduate assistant count: " + graduateAssistantCount);
-        System.out.println("Total number of courses: " + totalCourses);
-
-        System.out.println("\n**********Online Students details**********");
-        double onlineTotalFee = 0.0;
-        int totalMonths = 0;
-        for (OnlineStudent onlineStudent : onlineStudents) {
-            System.out.println(onlineStudent);
-            onlineTotalFee += onlineStudent.getPayableAmount();
-            totalMonths += onlineStudent.getNoOfMonths();
-        }
-        double onlineAverageFee = onlineTotalFee / numOnlineStudents;
-        System.out.println("\nAverage Students fee: " + onlineAverageFee);
-        System.out.println("Total number of months: " + totalMonths);
+        
+        System.out.println("**********Undergraduate Students details**********");
+        System.out.printf("Average Student fee: %.2f\n", ugFee / numUGStudents);
+        System.out.println("Scholarship count: " + scholarship);
+        System.out.println("Total number of courses: " + UGcourses);
+        System.out.println();
+        
+        System.out.println("**********Graduate Students details**********");
+        System.out.printf("Average Student fee: %.2f\n", gradFee / numGradStudents);
+        System.out.println("Graduate Assistantship count: " + gradAssist);
+        System.out.println("Total number of courses: " + graduateCourses);
+        System.out.println();
+        
+        System.out.println("**********Online Students details**********");
+        System.out.printf("Average Student fee: %.2f\n", onlineFee / numOnlineStudents);
     }
 }
+        
+        
