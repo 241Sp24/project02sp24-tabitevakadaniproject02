@@ -1,8 +1,3 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
 package studentdriver;
 
 import java.io.File;
@@ -78,13 +73,13 @@ Scanner input = new Scanner(System.in);
         for (StudentFees s: students) {
             //
             if(count == 0){
-                System.out.println("*******Undergraduate students list*******");
+                System.out.println("***********Undergraduate students list*************");
             }
-            if(count == numGradStudents){
-                System.out.println("*******Graduate students list*******");
+            if(count == numGradStudents+1){
+                System.out.println("*************Graduate students list************");
             }
             if(count == numUGStudents + numGradStudents){
-                System.out.println("*******Online students list*******");
+                System.out.println("************Online students list**************");
             }
             if(s instanceof UGStudent){
                 System.out.println(s);
@@ -110,19 +105,19 @@ Scanner input = new Scanner(System.in);
             count += 1;
         }
         
-        System.out.println("**********Undergraduate Students details**********");
+        System.out.println("******************Undergraduate Students details********************");
         System.out.printf("Average Student fee: %.2f\n", ugFee / numUGStudents);
         System.out.println("Scholarship count: " + scholarship);
         System.out.println("Total number of courses: " + UGcourses);
         System.out.println();
         
-        System.out.println("**********Graduate Students details**********");
+        System.out.println("***************Graduate Students details********************");
         System.out.printf("Average Student fee: %.2f\n", gradFee / numGradStudents);
         System.out.println("Graduate Assistantship count: " + gradAssist);
         System.out.println("Total number of courses: " + graduateCourses);
         System.out.println();
         
-        System.out.println("**********Online Students details**********");
+        System.out.println("*****************Online Students details**********************");
         System.out.printf("Average Student fee: %.2f\n", onlineFee / numOnlineStudents);
     }
 }
