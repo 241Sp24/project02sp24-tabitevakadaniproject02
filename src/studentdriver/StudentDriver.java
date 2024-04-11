@@ -64,6 +64,7 @@ Scanner input = new Scanner(System.in);
         
         int scholarship = 0;
         int UGcourses = 0;
+        int UGstudentsZeroPay = 0;
         int gradAssist = 0;
         int graduateCourses = 0;
         double ugFee = 0.0;
@@ -71,19 +72,23 @@ Scanner input = new Scanner(System.in);
         double onlineFee = 0.0;
         count = 0;
         for (StudentFees s: students) {
-            //
+            
             if(count == 0){
-                System.out.println("***********Undergraduate students list*************");
+                System.out.println("*******Undergraduate students list*******");
             }
             if(count == numGradStudents+1){
-                System.out.println("*************Graduate students list************");
+                System.out.println("*******Graduate students list*******");
             }
             if(count == numUGStudents + numGradStudents){
-                System.out.println("************Online students list**************");
+                System.out.println("*******Online students list*******");
             }
             if(s instanceof UGStudent){
                 System.out.println(s);
                 ugFee += ((UGStudent) s).getPayableAmount();
+                if(((UGStudent) s).getPayableAmount()==0) {
+                	UGstudentsZeroPay +=1;
+                }
+                System.out.println(ugFee);
                 UGcourses += ((UGStudent) s).getCoursesEnrolled();
                 if(((UGStudent) s).isHasScholarship()){
                     scholarship += 1;
@@ -105,19 +110,19 @@ Scanner input = new Scanner(System.in);
             count += 1;
         }
         
-        System.out.println("******************Undergraduate Students details********************");
-        System.out.printf("Average Student fee: %.2f\n", ugFee / numUGStudents);
+        System.out.println("**********Undergraduate Students details**********");
+        System.out.printf("Average Student fee: %.1f\n", ugFee / (numUGStudents-UGstudentsZeroPay));
         System.out.println("Scholarship count: " + scholarship);
         System.out.println("Total number of courses: " + UGcourses);
         System.out.println();
         
-        System.out.println("***************Graduate Students details********************");
+        System.out.println("**********Graduate Students details**********");
         System.out.printf("Average Student fee: %.2f\n", gradFee / numGradStudents);
         System.out.println("Graduate Assistantship count: " + gradAssist);
         System.out.println("Total number of courses: " + graduateCourses);
         System.out.println();
         
-        System.out.println("*****************Online Students details**********************");
+        System.out.println("**********Online Students details**********");
         System.out.printf("Average Student fee: %.2f\n", onlineFee / numOnlineStudents);
     }
 }

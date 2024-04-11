@@ -1,3 +1,5 @@
+
+ 
 package studentdriver;
 
 /**
@@ -37,19 +39,17 @@ public class GraduateStudent extends StudentFees {
     }
 
     @Override
+    
     public double getPayableAmount() {
-        double tuitionFee = coursesEnrolled * CREDITS_PER_COURSE * PER_CREDIT_FEE;
-        double totalFee = tuitionFee + ADDITIONAL_FEE;
-        if (isGraduateAssistant) {
-            if (graduateAssistantType.equalsIgnoreCase("full")) {
-                totalFee -= tuitionFee;
-            } else if (graduateAssistantType.equalsIgnoreCase("half")) {
-                totalFee -= tuitionFee * HALF_ASSISTANTSHIP;
-            }
+        double tuition = (getCoursesEnrolled() * super.getCREDITS_PER_COURSE() * super.getPER_CREDIT_FEE()) ;
+        if (isGraduateAssistant && graduateAssistantType.equalsIgnoreCase("full")) {
+            return 0 + ADDITIONAL_FEE; // Full tuition waiver
+        } else if (isGraduateAssistant && graduateAssistantType.equalsIgnoreCase("half")) {
+            return (tuition / 2)+ADDITIONAL_FEE; // Half tuition waiver
+        } else {
+            return tuition+ADDITIONAL_FEE; // No assistantship
         }
-        return totalFee;
     }
-
 
     
     @Override
