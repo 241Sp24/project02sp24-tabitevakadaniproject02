@@ -88,7 +88,7 @@ Scanner input = new Scanner(System.in);
                 if(((UGStudent) s).getPayableAmount()==0) {
                 	UGstudentsZeroPay +=1;
                 }
-                System.out.println(ugFee);
+
                 UGcourses += ((UGStudent) s).getCoursesEnrolled();
                 if(((UGStudent) s).isHasScholarship()){
                     scholarship += 1;
