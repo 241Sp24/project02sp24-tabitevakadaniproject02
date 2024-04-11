@@ -27,7 +27,7 @@ public class OnlineStudent extends StudentFees {
     @Override
     public String toString() {
         return "Student name: " + getStudentName() + "\n"
-                + "Student ID: " + getStudentID() + "\n"
+                + "Student id: " + getStudentID() + "\n"
                 + "Enrolled: " + isEnrolled() + "\n"
                 + "No of months: " + noOfMonths + "\n"
                 + "Payable amount: " + String.format("%.2f", getPayableAmount());
